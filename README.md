@@ -10,16 +10,17 @@ Classes
 - WebvantageInitOptions (Available initialize options for passing into constructor)
 - WebvantageLanguage (List of available language options to be set on WebvantageInitOptions:LANGUAGE)
 - WebvantageJobEntry (A job entry as entered by a user containing the entered job # and other specific entry data)
+- WebvantageTimeEntry (A time/hour entry containing the specified WebvantageJobEntry on a specified date)
 
 
 Webvantage Methods
 ------------------
 - __construct(url:string, db:string, options:mixed)
-- copyJobs(jobNumbers:mixed, dateSpan:mixed) - Copies an array of job numbers to a specified date span
-- getTimeEntries(dateSpan:mixed) - Returns array of date-sorted time/job entries from a specified date span
-- getJobEntries(dateSpan:mixed) - Returns array of job entries from a specifed date span
-- submitTimeEntry(job:string, date:date, hours:int) - Submits a time entry for a specified job number on a specified date
-- submitForApproval(dateSpan:mixed) - Submits entries from a specified date span for approval
+- copyJobEntries(jobEntries:array[WebvantageJobEntry], dateSpan:array[count=2]) - Copies an array of job entries to a specified date span
+- getTimeEntries(dateSpan:array[count=2]) - Returns array of date-sorted time/job entries from a specified date span
+- getJobEntries(dateSpan:array[count=2]) - Returns array of job entries from a specifed date span
+- submitTimeEntry(jobEntry:WebvantageJobEntry) - Submits a time entry for a specified job number on a specified date
+- submitForApproval(dateSpan:array[count=2]) - Submits entries from a specified date span for approval
 
 WebvantageInitOptions Constants
 -------------------------------
@@ -35,3 +36,9 @@ WebvantageJobEntry Variables
 ----------------------------
 - jobNumber <string>
 - ...
+
+WebvantageTimeEntry Variables
+-----------------------------
+- jobEntry <WebvantageJobEntry>
+- date <date>
+- hours <int>
