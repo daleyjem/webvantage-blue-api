@@ -19,7 +19,7 @@ Webvantage Methods
 - copyJobEntries(jobEntries:array[WebvantageJobEntry], dateSpan:array[count=2]) - Copies an array of job entries to a specified date span
 - getTimeEntries(dateSpan:array[count=2]) - Returns array of date-sorted time/job entries from a specified date span
 - getJobEntries(dateSpan:array[count=2]) - Returns array of job entries from a specifed date span
-- submitTimeEntry(jobEntry:WebvantageJobEntry) - Submits a time entry for a specified job number on a specified date
+- submitTimeEntry(timeEntry:WebvantageTimeEntry) - Submits a time entry for a specified job number on a specified date
 - submitForApproval(dateSpan:array[count=2]) - Submits entries from a specified date span for approval
 
 WebvantageInitOptions Constants
