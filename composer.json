@@ -1,0 +1,17 @@
+{
+    "name": "daleyjem/webvantage-blue-api",
+    "autoload": {
+        "classmap": [
+            "src"
+        ]
+    },
+    "require": {
+        "fabpot/goutte": "1.0"
+    },
+    "authors": [
+        {
+            "name": "Jeremy Daley",
+            "email": "jeremy.daley@rockfishinteractive.com"
+        }
+    ]
+}

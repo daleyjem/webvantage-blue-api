@@ -1,5 +1,7 @@
 <?php
-	include_once('../src/Webvantage.php');
+	include_once('../vendor/autoload.php');
+
+	use com\daleyjem\Webvantage;
 
 	$url 		= $_GET['baseUrl'];
 	$db			= $_GET['db'];
