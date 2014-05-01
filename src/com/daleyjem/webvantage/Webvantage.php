@@ -97,21 +97,12 @@ namespace com\daleyjem\webvantage {
 		}
 
 		public function getJobEntries($dateSpan = null) {
-			$method = 'GET';
-			$params = array();
-			if ($dateSpan != null) {
-				$method = 'POST';
-				$params = array(
-					'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate$dateInput' => '4/20/2014',
-					'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate' => '2014-04-20',
-					'ctl00_ContentPlaceHolderMain_RadDatePickerStartDate_dateInput_ClientState' => '{"enabled":true,"emptyMessage":"Start Date","validationText":"2014-04-20-00-00-00","valueAsString":"2014-04-20-00-00-00","minDateStr":"1950-01-01-00-00-00","maxDateStr":"2050-01-01-00-00-00","lastSetTextBoxValue":"4/20/2014"}'
-				);
-			}
-
 			$jobEntries = array();
 
 			$uri = $this->url . self::PATH_TIMESHEET;
 
+			// We want to get the source directly from 'Timesheets', but we might have to sign in first
+			// if it's required
 			$isSignedIn = null;
 			while ($isSignedIn != true) {
 				$this->crawler = $this->client->request('GET', $uri);
@@ -122,8 +113,19 @@ namespace com\daleyjem\webvantage {
 					}
 				}
 			}
-echo 'yo';
+
+			// If a datespan is supplied, we have to load the 'Timesheets' page first,
+			// and then submit the form with a dateSpan
 			if ($dateSpan != null) {
+				// TODO: Implement the util/ for formatting these params from the supplied $dateSpan
+				// - include 'use' for WebvantageFormParams class
+				// - $params = WebvantageFormParams::buildTimesheetDates($dateSpan);
+				$params = array(
+					'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate$dateInput' => '4/20/2014',
+					'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate' => '2014-04-20',
+					'ctl00_ContentPlaceHolderMain_RadDatePickerStartDate_dateInput_ClientState' => '{"enabled":true,"emptyMessage":"Start Date","validationText":"2014-04-20-00-00-00","valueAsString":"2014-04-20-00-00-00","minDateStr":"1950-01-01-00-00-00","maxDateStr":"2050-01-01-00-00-00","lastSetTextBoxValue":"4/20/2014"}'
+				);
+				// The 'form' is the .NET containing <form>
 				$form = $this->crawler->filter('form')->form();
 				$this->crawler = $this->client->submit($form, $params);
 			}

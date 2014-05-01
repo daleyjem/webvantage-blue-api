@@ -7,8 +7,11 @@ namespace com\daleyjem\webvantage\util {
 		const FIELD_DATESPAN_DATE_UNFORMATTED 	= 'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate$dateInput',
 			  FIELD_DATESPAN_DATE_FORMATTED 	= 'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate',
 			  FIELD_DATESPAN_COMBINED_JSON 		= 'ctl00_ContentPlaceHolderMain_RadDatePickerStartDate_dateInput_ClientState',
-			  MASK_DATESPAN_UNFORMATTED			= 'm/d/Y',
-			  MASK_DATESPAN_FORMATTED 			= 'Y-mm-dd';
+			  MASK_DATESPAN_UNFORMATTED			= 'n/j/Y',
+			  MASK_DATESPAN_FORMATTED 			= 'Y-m-d',
+			  MASK_DATESPAN_FULL 				= 'Y-m-d-H-i-s',
+			  DATESTR_MIN 						= '1950-01-01',
+			  DATESTR_MAX						= '2050-01-01';
 
 		/* EXAMPLE:
 
@@ -43,14 +46,26 @@ namespace com\daleyjem\webvantage\util {
 
 		/**
 		 * Creates the JSON string required by Webvantage for FIELD_DATESPAN_COMBINED_JSON
-		 * @param  [type] $dateSpan [description]
+		 * @param  [type] $dateObj A PHP 'date' object
 		 * @return [type]           [description]
 		 */
-		private function createDatespanJSON($dateSpan) {
-			$fieldsVals = array();
-			$json = json_encode($fieldsVals);
-			// TODO: Strip any brackets... they're not used 
-			return $json;
+		private function createDatespanJSON($dateObj) {
+			$fieldsVals = array(
+				"enabled" 				=> "true",
+				"emptyMessage" 			=> "Start Date",
+				"validationText" 		=> "",
+				"valueAsString" 		=> "",
+				"minDateStr" 			=> "",
+				"maxDateStr" 			=> "",
+				"lastSetTextBoxValue" 	=> ""
+			);
+
+			$jsonStr = json_encode($fieldsVals);
+			
+			// Strip any brackets... they're not used 
+			$jsonStr = str_replace(array('[', ']'), array('',''), $jsonStr);
+			
+			return $jsonStr;
 		}
 	}
 }
