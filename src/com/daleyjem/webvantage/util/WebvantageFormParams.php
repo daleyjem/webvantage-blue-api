@@ -4,8 +4,8 @@ namespace com\daleyjem\webvantage\util {
 
 	class WebvantageFormParams {
 
-		const FIELD_DATESPAN_DATE_UNFORMATTED 	= 'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate$dateInput',
-			  FIELD_DATESPAN_DATE_FORMATTED 	= 'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate',
+		const FIELD_DATESPAN_UNFORMATTED 		= 'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate$dateInput',
+			  FIELD_DATESPAN_FORMATTED 			= 'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate',
 			  FIELD_DATESPAN_COMBINED_JSON 		= 'ctl00_ContentPlaceHolderMain_RadDatePickerStartDate_dateInput_ClientState',
 			  MASK_DATESPAN_UNFORMATTED			= 'n/j/Y',
 			  MASK_DATESPAN_FORMATTED 			= 'Y-m-d',
@@ -33,13 +33,11 @@ namespace com\daleyjem\webvantage\util {
 		public static function buildTimesheetDates($dateSpan) {
 			$params = array();
 
-			// TODO: Create 'date' object from (possibly unformatted) supplied $dateSpan
+			$timestamp = strtotime($dateSpan);
 
-			// TODO: Convert date to unformatted
-			
-			// TODO: Convert date to formatted
-			 
-			// TODO: Get JSON string from date 
+			$params[self::FIELD_DATESPAN_UNFORMATTED] 	= date(self::MASK_DATESPAN_UNFORMATTED, $timestamp);
+			$params[self::FIELD_DATESPAN_FORMATTED] 	= date(self::MASK_DATESPAN_FORMATTED, $timestamp);
+			$params[self::FIELD_DATESPAN_COMBINED_JSON] = self::createDatespanJSON($timestamp);
 
 			return $params;
 		}
@@ -49,21 +47,21 @@ namespace com\daleyjem\webvantage\util {
 		 * @param  [type] $dateObj A PHP 'date' object
 		 * @return [type]           [description]
 		 */
-		private function createDatespanJSON($dateObj) {
+		private static function createDatespanJSON($dateObj) {
 			$fieldsVals = array(
-				"enabled" 				=> "true",
+				"enabled" 				=> true,
 				"emptyMessage" 			=> "Start Date",
-				"validationText" 		=> "",
-				"valueAsString" 		=> "",
-				"minDateStr" 			=> "",
-				"maxDateStr" 			=> "",
-				"lastSetTextBoxValue" 	=> ""
+				"validationText" 		=> date(self::MASK_DATESPAN_FULL, $dateObj),
+				"valueAsString" 		=> date(self::MASK_DATESPAN_FULL, $dateObj),
+				"minDateStr" 			=> date(self::MASK_DATESPAN_FULL, strtotime(self::DATESTR_MIN)),
+				"maxDateStr" 			=> date(self::MASK_DATESPAN_FULL, strtotime(self::DATESTR_MAX)),
+				"lastSetTextBoxValue" 	=> date(self::MASK_DATESPAN_UNFORMATTED, $dateObj)
 			);
 
 			$jsonStr = json_encode($fieldsVals);
 			
 			// Strip any brackets... they're not used 
-			$jsonStr = str_replace(array('[', ']'), array('',''), $jsonStr);
+			$jsonStr = str_replace(array('[', ']', '\/'), array('','', '/'), $jsonStr);
 			
 			return $jsonStr;
 		}

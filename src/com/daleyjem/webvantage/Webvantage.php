@@ -4,6 +4,7 @@ namespace com\daleyjem\webvantage {
 
 	use com\daleyjem\webvantage\WebvantageLanguage;
 	use com\daleyjem\webvantage\WebvantageJobEntry;
+	use com\daleyjem\webvantage\util\WebvantageFormParams;
 	use com\daleyjem\util\Trace;
 	use Goutte\Client;
 
@@ -117,14 +118,8 @@ namespace com\daleyjem\webvantage {
 			// If a datespan is supplied, we have to load the 'Timesheets' page first,
 			// and then submit the form with a dateSpan
 			if ($dateSpan != null) {
-				// TODO: Implement the util/ for formatting these params from the supplied $dateSpan
-				// - include 'use' for WebvantageFormParams class
-				// - $params = WebvantageFormParams::buildTimesheetDates($dateSpan);
-				$params = array(
-					'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate$dateInput' => '4/20/2014',
-					'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate' => '2014-04-20',
-					'ctl00_ContentPlaceHolderMain_RadDatePickerStartDate_dateInput_ClientState' => '{"enabled":true,"emptyMessage":"Start Date","validationText":"2014-04-20-00-00-00","valueAsString":"2014-04-20-00-00-00","minDateStr":"1950-01-01-00-00-00","maxDateStr":"2050-01-01-00-00-00","lastSetTextBoxValue":"4/20/2014"}'
-				);
+				$params = WebvantageFormParams::buildTimesheetDates($dateSpan);
+				
 				// The 'form' is the .NET containing <form>
 				$form = $this->crawler->filter('form')->form();
 				$this->crawler = $this->client->submit($form, $params);
