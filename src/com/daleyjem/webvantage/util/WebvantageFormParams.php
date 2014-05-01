@@ -30,13 +30,13 @@ namespace com\daleyjem\webvantage\util {
 		public static function buildTimesheetDates($dateSpan) {
 			$params = array();
 
-			// Create 'date' object from supplied $dateSpan
+			// TODO: Create 'date' object from (possibly unformatted) supplied $dateSpan
 
-			// Convert date to unformatted
+			// TODO: Convert date to unformatted
 			
-			// Convert date to formatted
+			// TODO: Convert date to formatted
 			 
-			// Get JSON string from date 
+			// TODO: Get JSON string from date 
 
 			return $params;
 		}
@@ -49,6 +49,7 @@ namespace com\daleyjem\webvantage\util {
 		private function createDatespanJSON($dateSpan) {
 			$fieldsVals = array();
 			$json = json_encode($fieldsVals);
+			// TODO: Strip any brackets... they're not used 
 			return $json;
 		}
 	}

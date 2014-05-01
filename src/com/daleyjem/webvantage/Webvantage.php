@@ -122,7 +122,7 @@ namespace com\daleyjem\webvantage {
 					}
 				}
 			}
-
+echo 'yo';
 			if ($dateSpan != null) {
 				$form = $this->crawler->filter('form')->form();
 				$this->crawler = $this->client->submit($form, $params);
