@@ -11,10 +11,11 @@
 	$db			= $_GET['db'];
 	$user		= $_GET['user'];
 	$pass		= $_GET['pass'];
+	$dateSpan	= (isset($_GET['dateSpan'])) ? ($_GET['dateSpan']) : (null);
 
 	$webvantage = new Webvantage($url, $db, $user, $pass);
-	//$webvantage->signIn($db);
-	$entries = $webvantage->getJobEntries('4/20/2014');
+	
+	$entries = $webvantage->getJobEntries($dateSpan);
 
 	echo json_encode($entries);
 	
