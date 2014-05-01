@@ -6,7 +6,7 @@
         ]
     },
     "require": {
-        "fabpot/goutte": "1.0"
+        "fabpot/goutte": "1.0.2"
     },
     "authors": [
         {

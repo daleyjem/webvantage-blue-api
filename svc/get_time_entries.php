@@ -1,15 +1,21 @@
 <?php
+	ini_set('display_startup_errors',1);
+	ini_set('display_errors',1);
+	error_reporting(-1);
+
 	include_once('../vendor/autoload.php');
 
-	use com\daleyjem\Webvantage;
+	use com\daleyjem\webvantage\Webvantage;
 
-	$url 		= $_GET['baseUrl'];
+	$url 		= $_GET['url'];
 	$db			= $_GET['db'];
-	$options	= isset($_GET['options']) ? $_GET['options'] : array();
+	$user		= $_GET['user'];
+	$pass		= $_GET['pass'];
 
+	$webvantage = new Webvantage($url, $db, $user, $pass);
+	//$webvantage->signIn($db);
+	$entries = $webvantage->getJobEntries();
 
-	$webvantage = new Webvantage($url, $db, $options);
-	$webvantage->signIn();
-	$webvantage->getJobEntries();
+	echo json_encode($entries);
 	
 ?>
