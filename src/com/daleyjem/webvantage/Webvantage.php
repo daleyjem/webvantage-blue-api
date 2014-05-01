@@ -28,10 +28,10 @@ namespace com\daleyjem\webvantage {
 		/** Constants **/
 		const PATH_SIGNIN 		= '/SignIn.aspx',
 			  PATH_TIMESHEET 	= '/Timesheet.aspx?mm=1',
-			  PATH_REFERRER 	= '/UI_TopMenu.aspx',
 			  TEXT_SIGN_IN		= 'Sign In',
 			  TEXT_ERROR_TITLE	= 'Yikes!',
-			  FIELD_DATABASE	= 'RadWindowSignIn$C$TextBoxDataBase';
+			  FIELD_DATABASE	= 'RadWindowSignIn$C$TextBoxDataBase',
+			  FIELD_DATESPAN	= 'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate$dateInput';
 
 
 		/********************/
@@ -96,7 +96,18 @@ namespace com\daleyjem\webvantage {
 
 		}
 
-		public function getJobEntries(array $dateSpan = array()) {
+		public function getJobEntries($dateSpan = null) {
+			$method = 'GET';
+			$params = array();
+			if ($dateSpan != null) {
+				$method = 'POST';
+				$params = array(
+					'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate$dateInput' => '4/20/2014',
+					'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate' => '2014-04-20',
+					'ctl00_ContentPlaceHolderMain_RadDatePickerStartDate_dateInput_ClientState' => '{"enabled":true,"emptyMessage":"Start Date","validationText":"2014-04-20-00-00-00","valueAsString":"2014-04-20-00-00-00","minDateStr":"1950-01-01-00-00-00","maxDateStr":"2050-01-01-00-00-00","lastSetTextBoxValue":"4/20/2014"}'
+				);
+			}
+
 			$jobEntries = array();
 
 			$uri = $this->url . self::PATH_TIMESHEET;
@@ -110,6 +121,11 @@ namespace com\daleyjem\webvantage {
 						return false;
 					}
 				}
+			}
+
+			if ($dateSpan != null) {
+				$form = $this->crawler->filter('form')->form();
+				$this->crawler = $this->client->submit($form, $params);
 			}
 			
 			// Loop through each row of the timesheet to pull out the job entries

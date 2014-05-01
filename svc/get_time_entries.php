@@ -14,7 +14,7 @@
 
 	$webvantage = new Webvantage($url, $db, $user, $pass);
 	//$webvantage->signIn($db);
-	$entries = $webvantage->getJobEntries();
+	$entries = $webvantage->getJobEntries('2014-04-20');
 
 	echo json_encode($entries);
 	
