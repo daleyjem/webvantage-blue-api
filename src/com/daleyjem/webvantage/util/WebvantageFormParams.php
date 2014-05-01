@@ -4,10 +4,11 @@ namespace com\daleyjem\webvantage\util {
 
 	class WebvantageFormParams {
 
-		const FIELD_DATESPAN_DATE_UNFORMATTED 	= '',
-			  FIELD_DATESPAN_DATE_FORMATTED 	= '',
-			  FIELD_DATESPAN_COMBINED_JSON 		= '',
-			  MASK_DATESPAN_RAW
+		const FIELD_DATESPAN_DATE_UNFORMATTED 	= 'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate$dateInput',
+			  FIELD_DATESPAN_DATE_FORMATTED 	= 'ctl00$ContentPlaceHolderMain$RadDatePickerStartDate',
+			  FIELD_DATESPAN_COMBINED_JSON 		= 'ctl00_ContentPlaceHolderMain_RadDatePickerStartDate_dateInput_ClientState',
+			  MASK_DATESPAN_UNFORMATTED			= 'm/d/Y',
+			  MASK_DATESPAN_FORMATTED 			= 'Y-mm-dd';
 
 		/* EXAMPLE:
 
